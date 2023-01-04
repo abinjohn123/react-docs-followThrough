@@ -1,0 +1,18 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.contributors-images {
+  display: flex;
+  gap: 20px;
+}
+
+.contributor {
+  text-align: center;
+}
+
+.contributor>img {
+  border-radius: 55%;
+}
