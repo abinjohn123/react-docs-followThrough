@@ -103,37 +103,38 @@ const { useState } = React;
 
 function Carousel() {
   const [index, setIndex] = useState(0);
-  const [showMore, setShowMore] = useState(false);
+  const [showDetail, setShowDetail] = useState(false);
 
-  function nextSlide() {
-    if (index === sculptureList.length - 1) setIndex(0);
-    else setIndex(index + 1);
+  function handleNextClick() {
+    setIndex(index === sculptureList.length - 1 ? 0 : index + 1);
   }
 
-  function moreDetails() {
-    setShowMore(!showMore);
+  function handleDetailDisplay() {
+    setShowDetail(!showDetail);
   }
 
   const sculpture = sculptureList[index];
 
   return (
     <div>
-      <button onClick={nextSlide}>Next</button>
-      <h2>{sculpture.name}</h2>
+      <button onClick={handleNextClick}>Next</button>
+      <h2>
+        <em>{sculpture.name}</em> by {sculpture.artist}
+      </h2>
       <p>
         ({index + 1} of {sculptureList.length})
       </p>
-      <button onClick={moreDetails} style={{ display: 'block' }}>
-        {showMore ? 'Hide Details' : 'Show details'}
+      <button onClick={handleDetailDisplay}>
+        {showDetail ? 'Hide Details' : 'Expand Details'}
       </button>
-      {showMore && <p>{sculpture.description}</p>}
-      <img src={sculpture.url} alt={sculpture.alt}></img>
+      {showDetail && <p>{sculpture.description}</p>}
+      <img
+        src={sculpture.url}
+        alt={sculpture.alt}
+        style={{ display: 'block' }}
+      ></img>
     </div>
   );
 }
 
-function App() {
-  return <Carousel />;
-}
-
-root.render(<App />);
+root.render(<Carousel />);
