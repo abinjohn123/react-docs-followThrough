@@ -1,26 +1,48 @@
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-function Button({ onClick, children }) {
-  return <button onClick={onClick}>{children}</button>;
-}
+const { useState } = React;
 
-function PlayMovie({ onSmash, movie }) {
-  return <Button onClick={onSmash}>Play "{movie}"</Button>;
-}
+function Form() {
+  let [firstName, setFirstName] = useState('');
+  let [lastName, setLastName] = useState('');
+  console.log('Render: ', firstName, lastName);
 
-function UploadImage() {
+  function handleFirstNameChange(e) {
+    setFirstName(e.target.value);
+  }
+
+  function handleLastNameChange(e) {
+    setLastName(e.target.value);
+  }
+
+  function handleReset() {
+    firstName = '';
+    lastName = '';
+    console.log('Reset: ', firstName, lastName);
+  }
+
   return (
-    <Button onClick={() => alert('uploading image!')}>Upload Image</Button>
+    <form onSubmit={(e) => e.preventDefault()}>
+      <input
+        placeholder="First name"
+        value={firstName}
+        onChange={handleFirstNameChange}
+      />
+      <input
+        placeholder="Last name"
+        value={lastName}
+        onChange={handleLastNameChange}
+      />
+      <h1>
+        Hi, {firstName} {lastName}
+      </h1>
+      <button onClick={handleReset}>Reset</button>
+    </form>
   );
 }
 
-function Toolbar() {
-  return (
-    <div>
-      <PlayMovie onSmash={() => alert('playing movie')} movie="gold" />
-      <UploadImage />
-    </div>
-  );
+function App() {
+  return <Form />;
 }
 
-root.render(<Toolbar />);
+root.render(<App />);
