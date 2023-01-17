@@ -7,33 +7,18 @@ const initialArtists = [
   { id: 2, name: 'Louise Nevelson' },
 ];
 
-let nextId = 3;
-
 function App() {
-  const [input, setInput] = useState('');
   const [list, setList] = useState([...initialArtists]);
 
-  function addItemHandler() {
-    console.log(list);
-    const index = 2;
-    setList([
-      ...list.slice(0, index),
-      { id: nextId++, name: input },
-      ...list.slice(index),
-    ]);
+  function reverseClickHandler() {
+    setList([...list].reverse());
   }
-
   return (
     <div>
-      <input
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        type="text"
-      />
-      <button onClick={addItemHandler}>Add</button>
+      <button onClick={reverseClickHandler}>Reverse List</button>
       <ul>
-        {list.map((entry, i) => (
-          <li key={i}>{entry.name}</li>
+        {list.map((entry) => (
+          <li key={entry.id}>{entry.name}</li>
         ))}
       </ul>
     </div>
