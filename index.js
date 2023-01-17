@@ -1,35 +1,43 @@
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const { useState } = React;
 
-let nextId = 0;
-
-function Form() {
-  const [tasks, setTasks] = useState([]);
-  let [taskInput, setTaskInput] = useState('');
-
-  function submitClickHandler(e) {
-    e.preventDefault();
-    setTaskInput('');
-    setTasks([...tasks, { id: nextId++, task: taskInput }]);
-  }
-  return (
-    <form>
-      <input
-        value={taskInput}
-        onChange={(e) => setTaskInput(e.target.value)}
-      ></input>
-      <button onClick={submitClickHandler}>Add</button>
-      <ul>
-        {tasks.map((task) => (
-          <li key={task.id}>{task.task}</li>
-        ))}
-      </ul>
-    </form>
-  );
-}
+let initialShapes = [
+  { id: 0, type: 'circle', x: 50, y: 100 },
+  { id: 1, type: 'square', x: 150, y: 100 },
+  { id: 2, type: 'circle', x: 250, y: 100 },
+];
 
 function App() {
-  return <Form />;
+  const [shapes, setShapes] = useState(initialShapes);
+  function btnClickHandler() {
+    setShapes(
+      shapes.map((shape) => {
+        if (shape.type === 'square') return shape;
+        shape.y = shape.y + 50;
+
+        return shape;
+      })
+    );
+  }
+  return (
+    <div>
+      <button onClick={btnClickHandler}>Move circles down!</button>
+      {initialShapes.map((shape) => (
+        <div
+          key={shape.id}
+          style={{
+            background: 'purple',
+            position: 'absolute',
+            left: shape.x,
+            top: shape.y,
+            borderRadius: shape.type === 'circle' ? '50%' : '',
+            width: 20,
+            height: 20,
+          }}
+        />
+      ))}
+    </div>
+  );
 }
 
 root.render(<App />);
